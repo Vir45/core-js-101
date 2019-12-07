@@ -108,40 +108,50 @@ function getFirstChar(value) {
  *   'cat'              => 'cat'
  *   '\tHello, World! ' => 'Hello, World!'
  */
-function removeLeadingAndTrailingWhitespaces( /* value */ ) {
-  throw new Error('Not implemented');
+function removeLeadingAndTrailingWhitespaces(value) {
+  let result = value;
+  if (result.startsWith('  ')) {
+    result = result.slice(2);
+  }
+
+  if (result.startsWith('\t')) {
+    result = result.slice(1);
+    result = result.slice(0, result.length - 1);
+  }
+
+  return result;
 }
 
-// /**
-//  * Returns a string that repeated the specified number of times.
-//  *
-//  * @param {string} value
-//  * @param {string} count
-//  * @return {string}
-//  *
-//  * @example
-//  *   'A', 5  => 'AAAAA'
-//  *   'cat', 3 => 'catcatcat'
-//  */
-// function repeatString( /* value, count */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Returns a string that repeated the specified number of times.
+ *
+ * @param {string} value
+ * @param {string} count
+ * @return {string}
+ *
+ * @example
+ *   'A', 5  => 'AAAAA'
+ *   'cat', 3 => 'catcatcat'
+ */
+function repeatString(value, count) {
+  return value.repeat(count);
+}
 
-// /**
-//  * Remove the first occurrence of string inside another string
-//  *
-//  * @param {string} str
-//  * @param {string} value
-//  * @return {string}
-//  *
-//  * @example
-//  *   'To be or not to be', 'not'  => 'To be or  to be'
-//  *   'I like legends', 'end' => 'I like legs',
-//  *   'ABABAB','BA' => 'ABAB'
-//  */
-// function removeFirstOccurrences( /* str, value */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Remove the first occurrence of string inside another string
+ *
+ * @param {string} str
+ * @param {string} value
+ * @return {string}
+ *
+ * @example
+ *   'To be or not to be', 'not'  => 'To be or  to be'
+ *   'I like legends', 'end' => 'I like legs',
+ *   'ABABAB','BA' => 'ABAB'
+ */
+function removeFirstOccurrences(str, value) {
+
+}
 
 // /**
 //  * Remove the first and last angle brackets from tag string
@@ -294,7 +304,7 @@ module.exports = {
   extractNameFromTemplate,
   getFirstChar,
   removeLeadingAndTrailingWhitespaces,
-  // repeatString,
+  repeatString,
   // removeFirstOccurrences,
   // unbracketTag,
   // convertToUpperCase,
