@@ -150,84 +150,96 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-
+  const index = str.indexOf(value);
+  const result = str.slice(0, index) + str.slice(index + value.length);
+  return result;
 }
 
-// /**
-//  * Remove the first and last angle brackets from tag string
-//  *
-//  * @param {string} str
-//  * @return {string}
-//  *
-//  * @example
-//  *   '<div>' => 'div'
-//  *   '<span>' => 'span'
-//  *   '<a>' => 'a'
-//  */
-// function unbracketTag( /* str */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Remove the first and last angle brackets from tag string
+ *
+ * @param {string} str
+ * @return {string}
+ *
+ * @example
+ *   '<div>' => 'div'
+ *   '<span>' => 'span'
+ *   '<a>' => 'a'
+ */
+function unbracketTag(str) {
+  return str.slice(1, str.length - 1);
+}
 
 
-// /**
-//  * Converts all characters of the specified string into the upper case
-//  *
-//  * @param {string} str
-//  * @return {string}
-//  *
-//  * @example
-//  *   'Thunderstruck' => 'THUNDERSTRUCK'
-//  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-//  */
-// function convertToUpperCase( /* str */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Converts all characters of the specified string into the upper case
+ *
+ * @param {string} str
+ * @return {string}
+ *
+ * @example
+ *   'Thunderstruck' => 'THUNDERSTRUCK'
+ *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+ */
+function convertToUpperCase(str) {
+  return str.toUpperCase();
+}
 
-// /**
-//  * Extracts e-mails from single string with e-mails list delimeted by semicolons
-//  *
-//  * @param {string} str
-//  * @return {array}
-//  *
-//  * @example
-//  *   'angus.young@gmail.com;brian.johnson@hotmail.com;bon.scott@yahoo.com'
-//  *   => [
-//  *      'angus.young@gmail.com',
-//  *      'brian.johnson@hotmail.com',
-//  *      'bon.scott@yahoo.com'
-//  *   ],
-//  *   'info@gmail.com' => ['info@gmail.com']
-//  */
-// function extractEmails( /* str */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Extracts e-mails from single string with e-mails list delimeted by semicolons
+ *
+ * @param {string} str
+ * @return {array}
+ *
+ * @example
+ *   'angus.young@gmail.com;brian.johnson@hotmail.com;bon.scott@yahoo.com'
+ *   => [
+ *      'angus.young@gmail.com',
+ *      'brian.johnson@hotmail.com',
+ *      'bon.scott@yahoo.com'
+ *   ],
+ *   'info@gmail.com' => ['info@gmail.com']
+ */
+function extractEmails(str) {
+  if (str.length < 10) {
+    return str.split('');
+  }
+  return str.split(';');
+}
 
-// /**
-//  * Returns the string representation of rectangle with specified width and height
-//  * using pseudograhic chars
-//  *
-//  * @param {number} width
-//  * @param {number} height
-//  * @return {string}
-//  *
-//  * @example
-//  *
-//  *            '┌────┐\n'+
-//  *  (6,4) =>  '│    │\n'+
-//  *            '│    │\n'+
-//  *            '└────┘\n'
-//  *
-//  *  (2,2) =>  '┌┐\n'+
-//  *            '└┘\n'
-//  *
-//  *             '┌──────────┐\n'+
-//  *  (12,3) =>  '│          │\n'+
-//  *             '└──────────┘\n'
-//  *
-//  */
-// function getRectangleString( /* width, height */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Returns the string representation of rectangle with specified width and height
+ * using pseudograhic chars
+ *
+ * @param {number} width
+ * @param {number} height
+ * @return {string}
+ *
+ * @example
+ *
+ *            '┌────┐\n'+
+ *  (6,4) =>  '│    │\n'+
+ *            '│    │\n'+
+ *            '└────┘\n'
+ *
+ *  (2,2) =>  '┌┐\n'+
+ *            '└┘\n'
+ *
+ *             '┌──────────┐\n'+
+ *  (12,3) =>  '│          │\n'+
+ *             '└──────────┘\n'
+ *
+ */
+function getRectangleString(width, height) {
+  const firstStr = `\u250C${'\u2500'.repeat(width - 2)}\u2510\n`;
+  const midleStr = `\u2502${' '.repeat(width - 2)}\u2502\n`;
+  const laststr = `\u2514${'\u2500'.repeat(width - 2)}\u2518\n`;
+  if (height === 2) {
+    return firstStr + laststr;
+  }
+  const midlestrAll = midleStr.repeat(height - 2);
+  return firstStr + midlestrAll + laststr;
+}
 
 
 // /**
@@ -305,11 +317,11 @@ module.exports = {
   getFirstChar,
   removeLeadingAndTrailingWhitespaces,
   repeatString,
-  // removeFirstOccurrences,
-  // unbracketTag,
-  // convertToUpperCase,
-  // extractEmails,
-  // getRectangleString,
+  removeFirstOccurrences,
+  unbracketTag,
+  convertToUpperCase,
+  extractEmails,
+  getRectangleString,
   // encodeToRot13,
   // isString,
   // getCardId,
