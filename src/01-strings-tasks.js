@@ -242,71 +242,91 @@ function getRectangleString(width, height) {
 }
 
 
-// /**
-//  * Encode specified string with ROT13 cipher
-//  * See details:  https://en.wikipedia.org/wiki/ROT13
-//  *
-//  * @param {string} str
-//  * @return {string}
-//  *
-//  * @example
-//  *
-//  *   'hello' => 'uryyb'
-//  *   'Why did the chicken cross the road?' => 'Jul qvq gur puvpxra pebff gur ebnq?'
-//  *   'Gb trg gb gur bgure fvqr!' => 'To get to the other side!'
-//  *   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
-//  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
-//  *
-//  */
-// function encodeToRot13( /* str */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Encode specified string with ROT13 cipher
+ * See details:  https://en.wikipedia.org/wiki/ROT13
+ *
+ * @param {string} str
+ * @return {string}
+ *
+ * @example
+ *
+ *   'hello' => 'uryyb'
+ *   'Why did the chicken cross the road?' => 'Jul qvq gur puvpxra pebff gur ebnq?'
+ *   'Gb trg gb gur bgure fvqr!' => 'To get to the other side!'
+ *   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+ *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
+ *
+ */
+function encodeToRot13(str) {
+  let result = '';
+  const alfavit = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const rotAlfavit = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  for (let i = 0; i < str.length; i += 1) {
+    const index = alfavit.indexOf(str[i]);
+    if (index >= 0) {
+      const letterForResult = rotAlfavit[index];
+      result += letterForResult;
+    } else {
+      result += str[i];
+    }
+  }
+  return result;
+}
 
-// /**
-//  * Returns true if the value is string; otherwise false.
-//  * @param {string} value
-//  * @return {boolean}
-//  *
-//  * @example
-//  *   isString() => false
-//  *   isString(null) => false
-//  *   isString([]) => false
-//  *   isString({}) => false
-//  *   isString('test') => true
-//  *   isString(new String('test')) => true
-//  */
-// function isString( /* value */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Returns true if the value is string; otherwise false.
+ * @param {string} value
+ * @return {boolean}
+ *
+ * @example
+ *   isString() => false
+ *   isString(null) => false
+ *   isString([]) => false
+ *   isString({}) => false
+ *   isString('test') => true
+ *   isString(new String('test')) => true
+ */
+function isString(value) {
+  if (typeof value === 'string' || value instanceof String) {
+    return true;
+  }
+  return false;
+}
 
 
-// /**
-//  * Returns playid card id.
-//  *
-//  * Playing cards inittial deck inclides the cards in the following order:
-//  *
-//  *  'A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
-//  *  'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
-//  *  'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
-//  *  'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'
-//  *
-//  * (see https://en.wikipedia.org/wiki/Standard_52-card_deck)
-//  * Function returns the zero-based index of specified card in the initial deck above.
-//  *
-//  * @param {string} value
-//  * @return {number}
-//  *
-//  * @example
-//  *   'A♣' => 0
-//  *   '2♣' => 1
-//  *   '3♣' => 2
-//  *     ...
-//  *   'Q♠' => 50
-//  *   'K♠' => 51
-//  */
-// function getCardId( /* value */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Returns playid card id.
+ *
+ * Playing cards inittial deck inclides the cards in the following order:
+ *
+ *  'A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
+ *  'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
+ *  'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
+ *  'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'
+ *
+ * (see https://en.wikipedia.org/wiki/Standard_52-card_deck)
+ * Function returns the zero-based index of specified card in the initial deck above.
+ *
+ * @param {string} value
+ * @return {number}
+ *
+ * @example
+ *   'A♣' => 0
+ *   '2♣' => 1
+ *   '3♣' => 2
+ *     ...
+ *   'Q♠' => 50
+ *   'K♠' => 51
+ */
+function getCardId(value) {
+  const arr = ['A♣', '2♣', '3♣', '4♣', '5♣', '6♣', '7♣', '8♣', '9♣', '10♣', 'J♣', 'Q♣', 'K♣',
+    'A♦', '2♦', '3♦', '4♦', '5♦', '6♦', '7♦', '8♦', '9♦', '10♦', 'J♦', 'Q♦', 'K♦',
+    'A♥', '2♥', '3♥', '4♥', '5♥', '6♥', '7♥', '8♥', '9♥', '10♥', 'J♥', 'Q♥', 'K♥',
+    'A♠', '2♠', '3♠', '4♠', '5♠', '6♠', '7♠', '8♠', '9♠', '10♠', 'J♠', 'Q♠', 'K♠',
+  ];
+  return arr.indexOf(value);
+}
 
 
 module.exports = {
@@ -322,7 +342,7 @@ module.exports = {
   convertToUpperCase,
   extractEmails,
   getRectangleString,
-  // encodeToRot13,
-  // isString,
-  // getCardId,
+  encodeToRot13,
+  isString,
+  getCardId,
 };
