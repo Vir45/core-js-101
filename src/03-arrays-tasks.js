@@ -518,112 +518,157 @@ function getIntervalArray(start, end) {
   return arr;
 }
 
-// /**
-//  * Returns array containing only unique values from the specified array.
-//  *
-//  * @param {array} arr
-//  * @return {array}
-//  *
-//  * @example
-//  *   [ 1, 2, 3, 3, 2, 1 ] => [ 1, 2, 3 ]
-//  *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
-//  *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
-//  */
-// function distinct( /* arr */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Returns array containing only unique values from the specified array.
+ *
+ * @param {array} arr
+ * @return {array}
+ *
+ * @example
+ *   [ 1, 2, 3, 3, 2, 1 ] => [ 1, 2, 3 ]
+ *   [ 'a', 'a', 'a', 'a' ]  => [ 'a' ]
+ *   [ 1, 1, 2, 2, 3, 3, 4, 4] => [ 1, 2, 3, 4]
+ */
+function distinct(arr) {
+  const result = [];
+  for (let i = 0; i < arr.length; i += 1) {
+    if (!result.includes(arr[i])) {
+      result.push(arr[i]);
+    }
+  }
+  return result;
+}
 
-// /**
-//  * Groups elements of the specified array by key.
-//  * Returns multimap of keys extracted from array elements via keySelector callback
-//  * and values extracted via valueSelector callback.
-//  * See: https://en.wikipedia.org/wiki/Multimap
-//  *
-//  * @param {array} array
-//  * @param {Function} keySelector
-//  * @param {Function} valueSelector
-//  * @return {Map}
-//  *
-//  * @example
-//  *   group([
-//  *      { country: 'Belarus', city: 'Brest' },
-//  *      { country: 'Russia', city: 'Omsk' },
-//  *      { country: 'Russia', city: 'Samara' },
-//  *      { country: 'Belarus', city: 'Grodno' },
-//  *      { country: 'Belarus', city: 'Minsk' },
-//  *      { country: 'Poland', city: 'Lodz' }
-//  *     ],
-//  *     item => item.country,
-//  *     item => item.city
-//  *   )
-//  *            =>
-//  *   Map {
-//  *    "Belarus" => ["Brest", "Grodno", "Minsk"],
-//  *    "Russia" => ["Omsk", "Samara"],
-//  *    "Poland" => ["Lodz"]
-//  *   }
-//  */
-// function group( /* array, keySelector, valueSelector */ ) {
-//   throw new Error('Not implemented');
-// }
-
-
-// /**
-//  * Projects each element of the specified array to a sequence
-//  * and flattens the resulting sequences into one array.
-//  *
-//  * @param {array} arr
-//  * @param {Function} childrenSelector, a transform function to apply to each element
-//  *                                     that returns an array of children
-//  * @return {array}
-//  *
-//  * @example
-//  *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
-//  *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
-//  */
-// function selectMany( /* arr, childrenSelector */ ) {
-//   throw new Error('Not implemented');
-// }
-
-
-// /**
-//  * Returns an element from the multidimentional array by the specified indexes.
-//  *
-//  * @param {array} arr
-//  * @param {array} indexes
-//  * @return {any} element from array
-//  *
-//  * @example
-//  *   [[1, 2], [3, 4], [5, 6]], [0,0]  => 1        (arr[0][0])
-//  *   ['one','two','three'], [2]       => 'three'  (arr[2])
-//  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
-//  */
-// function getElementByIndexes( /* arr, indexes */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Groups elements of the specified array by key.
+ * Returns multimap of keys extracted from array elements via keySelector callback
+ * and values extracted via valueSelector callback.
+ * See: https://en.wikipedia.org/wiki/Multimap
+ *
+ * @param {array} array
+ * @param {Function} keySelector
+ * @param {Function} valueSelector
+ * @return {Map}
+ *
+ * @example
+ *   group([
+ *      { country: 'Belarus', city: 'Brest' },
+ *      { country: 'Russia', city: 'Omsk' },
+ *      { country: 'Russia', city: 'Samara' },
+ *      { country: 'Belarus', city: 'Grodno' },
+ *      { country: 'Belarus', city: 'Minsk' },
+ *      { country: 'Poland', city: 'Lodz' }
+ *     ],
+ *     item => item.country,
+ *     item => item.city
+ *   )
+ *            =>
+ *   Map {
+ *    "Belarus" => ["Brest", "Grodno", "Minsk"],
+ *    "Russia" => ["Omsk", "Samara"],
+ *    "Poland" => ["Lodz"]
+ *   }
+ */
+function group(array, keySelector, valueSelector) {
+  const arrOfKey = array.map(keySelector);
+  const arrOfCity = array.map(valueSelector);
+  const map = new Map();
+  for (let i = 0; i < arrOfKey.length; i += 1) {
+    if (map.has(arrOfKey[i])) {
+      const a = map.get(arrOfKey[i]);
+      a.push(arrOfCity[i]);
+      map.set(arrOfKey[i], a);
+    } else {
+      const b = [];
+      b.push(arrOfCity[i]);
+      map.set(arrOfKey[i], b);
+    }
+  }
+  return map;
+}
 
 
-// /**
-//  * Swaps the head and tail of the specified array:
-//  * the head (first half) of array move to the end, the tail (last half) move to the start.
-//  * The middle element (if exists) leave on the same position.
-//  *
-//  *
-//  * @param {array} arr
-//  * @return {array}
-//  *
-//  * @example
-//  *   [ 1, 2, 3, 4, 5 ]   =>  [ 4, 5, 3, 1, 2 ]
-//  *    \----/   \----/
-//  *     head     tail
-//  *
-//  *   [ 1, 2 ]  => [ 2, 1 ]
-//  *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
-//  *
-//  */
-// function swapHeadAndTail( /* arr */ ) {
-//   throw new Error('Not implemented');
-// }
+/**
+ * Projects each element of the specified array to a sequence
+ * and flattens the resulting sequences into one array.
+ *
+ * @param {array} arr
+ * @param {Function} childrenSelector, a transform function to apply to each element
+ *                                     that returns an array of children
+ * @return {array}
+ *
+ * @example
+ *   [[1, 2], [3, 4], [5, 6]], (x) => x     =>   [ 1, 2, 3, 4, 5, 6 ]
+ *   ['one','two','three'], x=>x.split('')  =>   ['o','n','e','t','w','o','t','h','r','e','e']
+ */
+function selectMany(arr, childrenSelector) {
+  const a = arr.map(childrenSelector);
+  const result = [];
+  a.map((item) => {
+    item.map((data) => {
+      result.push(data);
+      return 2;
+    });
+    return 2;
+  });
+  return result;
+}
+
+
+/**
+ * Returns an element from the multidimentional array by the specified indexes.
+ *
+ * @param {array} arr
+ * @param {array} indexes
+ * @return {any} element from array
+ *
+ * @example
+ *   [[1, 2], [3, 4], [5, 6]], [0,0]  => 1        (arr[0][0])
+ *   ['one','two','three'], [2]       => 'three'  (arr[2])
+ *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
+ */
+function getElementByIndexes(arr, indexes) {
+  let result = arr;
+  for (let i = 0; i < indexes.length; i += 1) {
+    result = result[indexes[i]];
+  }
+  return result;
+}
+
+
+/**
+ * Swaps the head and tail of the specified array:
+ * the head (first half) of array move to the end, the tail (last half) move to the start.
+ * The middle element (if exists) leave on the same position.
+ *
+ *
+ * @param {array} arr
+ * @return {array}
+ *
+ * @example
+ *   [ 1, 2, 3, 4, 5 ]   =>  [ 4, 5, 3, 1, 2 ]
+ *    \----/   \----/
+ *     head     tail
+ *
+ *   [ 1, 2 ]  => [ 2, 1 ]
+ *   [ 1, 2, 3, 4, 5, 6, 7, 8 ]   =>  [ 5, 6, 7, 8, 1, 2, 3, 4 ]
+ *
+ */
+function swapHeadAndTail(arr) {
+  const arrLength = arr.length;
+  let result;
+  if (arrLength % 2 === 0) {
+    const first = arr.slice(0, arrLength / 2);
+    const second = arr.slice(arrLength / 2);
+    result = second.concat(first);
+  } else {
+    const head = arr.slice(0, (arrLength - 1) / 2);
+    const tail = arr.slice((arrLength + 1) / 2);
+    tail.push(arr[(arrLength - 1) / 2]);
+    result = tail.concat(head);
+  }
+  return result;
+}
 
 /* eslint-disable no-unused-vars */
 module.exports = {
@@ -653,10 +698,10 @@ module.exports = {
   sortCitiesArray,
   getIdentityMatrix,
   getIntervalArray,
-  // distinct,
-  // group,
-  // selectMany,
-  // getElementByIndexes,
-  // swapHeadAndTail,
+  distinct,
+  group,
+  selectMany,
+  getElementByIndexes,
+  swapHeadAndTail,
 };
 /* eslint-disable eol-last */
