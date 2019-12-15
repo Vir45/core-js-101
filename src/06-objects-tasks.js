@@ -20,8 +20,15 @@
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  const obj = {
+    width,
+    height,
+    getArea() {
+      return this.width * this.height;
+    },
+  };
+  return obj;
 }
 
 
@@ -35,8 +42,8 @@ function Rectangle(/* width, height */) {
  *    [1,2,3]   =>  '[1,2,3]'
  *    { width: 10, height : 20 } => '{"height":10,"width":20}'
  */
-function getJSON(/* obj */) {
-  throw new Error('Not implemented');
+function getJSON(obj) {
+  return JSON.stringify(obj);
 }
 
 
@@ -51,8 +58,10 @@ function getJSON(/* obj */) {
  *    const r = fromJSON(Circle.prototype, '{"radius":10}');
  *
  */
-function fromJSON(/* proto, json */) {
-  throw new Error('Not implemented');
+function fromJSON(proto, json) {
+  const obj = JSON.parse(json);
+  Object.setPrototypeOf(obj, proto);
+  return obj;
 }
 
 
@@ -69,7 +78,8 @@ function fromJSON(/* proto, json */) {
  * All types of selectors can be combined using the combinators ' ','+','~','>' .
  *
  * The task is to design a single class, independent classes or classes hierarchy
- * and implement the functionality to build the css selectors using the provided cssSelectorBuilder.
+ * and implement the functionality to build the css selectors using the provided
+ * cssSelectorBuilder.
  * Each selector should have the stringify() method to output the string repsentation
  * according to css specification.
  *
@@ -105,37 +115,39 @@ function fromJSON(/* proto, json */) {
  *           )
  *      )
  *  ).stringify()
- *    => 'div#main.container.draggable + table#data ~ tr:nth-of-type(even)   td:nth-of-type(even)'
+ *    => 'div#main.container.draggable + table#data ~ tr:nth-of-type(even)
+ *   td:nth-of-type(even)'
+
  *
  *  For more examples see unit tests.
  */
 
 const cssSelectorBuilder = {
-  element(/* value */) {
+  element( /* value */ ) {
     throw new Error('Not implemented');
   },
 
-  id(/* value */) {
+  id( /* value */ ) {
     throw new Error('Not implemented');
   },
 
-  class(/* value */) {
+  class( /* value */ ) {
     throw new Error('Not implemented');
   },
 
-  attr(/* value */) {
+  attr( /* value */ ) {
     throw new Error('Not implemented');
   },
 
-  pseudoClass(/* value */) {
+  pseudoClass( /* value */ ) {
     throw new Error('Not implemented');
   },
 
-  pseudoElement(/* value */) {
+  pseudoElement( /* value */ ) {
     throw new Error('Not implemented');
   },
 
-  combine(/* selector1, combinator, selector2 */) {
+  combine( /* selector1, combinator, selector2 */ ) {
     throw new Error('Not implemented');
   },
 };
