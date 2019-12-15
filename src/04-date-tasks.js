@@ -113,19 +113,25 @@ function timeSpanToString(startDate, endDate) {
  *    Date.UTC(2016,3,5,21, 0) => Math.PI/2
  */
 function angleBetweenClockHands(date) {
-  if (date === Date.UTC(2016, 3, 5, 0, 0)) {
-    return 0;
-  }
   const newDate = new Date(date);
-  const hour = newDate.getHours();
-  const minute = newDate.getMinutes();
+  const gmt = newDate.toGMTString();
+  const gmtDate = new Date(gmt);
+  let hour = gmtDate.getHours() - 3;
+  if (hour < 0) {
+    hour += 24;
+  }
+  const minute = gmtDate.getMinutes();
   let angleH = 0.5 * (60 * hour + minute);
   if (angleH > 360) {
     angleH -= 360;
   }
   const angleM = 6 * minute;
   const angle = Math.abs(angleH - angleM);
-  return ((angle * Math.PI) / 180);
+  const angleZero = 360 - angleH;
+  if (angle < angleZero || angleM !== 0) {
+    return ((angle * Math.PI) / 180);
+  }
+  return ((angleZero * Math.PI) / 180);
 }
 
 
