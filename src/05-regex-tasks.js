@@ -32,30 +32,30 @@
  * @return {RegExp}
  */
 function getRegexForGuid() {
-  throw new Error('Not implemented');
+  return /^{[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}}$/i;
 }
 
 
-/**
- * Returns the regexp that matches all the strings from first column
- * but of them from the second
- *
- * Match :                 Do not match:
- * -----------             --------------
- *  'pit'                     ' pt'
- *  'spot'                    'Pot'
- *  'spate'                   'peat'
- *  'slap two'                'part'
- *  'respite'
- *
- * NOTE : the regex length should be < 13
- *
- * @return {RegExp}
- *
- */
-function getRegexForPitSpot() {
-  throw new Error('Not implemented');
-}
+// /**
+//  * Returns the regexp that matches all the strings from first column
+//  * but of them from the second
+//  *
+//  * Match :                 Do not match:
+//  * -----------             --------------
+//  *  'pit'                     ' pt'
+//  *  'spot'                    'Pot'
+//  *  'spate'                   'peat'
+//  *  'slap two'                'part'
+//  *  'respite'
+//  *
+//  * NOTE : the regex length should be < 13
+//  *
+//  * @return {RegExp}
+//  *
+//  */
+// function getRegexForPitSpot() {
+//   return /^[\S]{1}[p]o/
+// }
 
 
 /**
@@ -78,13 +78,14 @@ function getRegexForPitSpot() {
  *   'PASSW0RD'.match(validator)  => false
  *   'Pa55'.match(validator) => false
  */
-function getPasswordValidator(/* minLength */) {
-  throw new Error('Not implemented');
+function getPasswordValidator(minLength) {
+  const regExp = new RegExp(`^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])[A-Za-z0-9]{${minLength},}$`);
+  return regExp;
 }
 
 
 module.exports = {
   getRegexForGuid,
-  getRegexForPitSpot,
+  // getRegexForPitSpot,
   getPasswordValidator,
 };
